@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic React</title>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- Import React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const container = document.getElementById("root");
+        const root = ReactDOM.createRoot(container);
+
+        function Book({title, year}) {
+            const [totalBuy, setTotalBuy] = React.useState(0);
+
+            function handleClick() {
+                setTotalBuy(totalBuy + 1);
+            }
+
+            return(
+                <>
+                <h3>Title: {title}</h3>
+                <h4>Year: {year ? year : 2023}</h4>
+                <button onClick={handleClick}>Get Now ({totalBuy})</button>
+                </>
+            );
+        }
+
+        function Stationery() {
+            const lists = [
+                { name: "Book", price: 5000 },
+                { name: "Pen", price: 2000 },
+            ];
+
+            return(
+                <ul>
+                    {lists.map((list) => (
+                        <li>{list.name}</li>
+                    ))}
+                </ul>
+            );
+        }
+
+        function CounterButton() {
+            const [count, setCount] = React.useState(0);
+
+            function addCount() {
+                if (count < 10) {
+                    setCount(count + 1);
+                } else {
+                    alert("Maximum limit reached!");
+                }
+            };
+
+            function reduceCount() {
+                if (count > 0) {
+                    setCount(count - 1);
+                }
+            };
+
+            function resetCounter() {
+                setCount(0);
+            };
+
+            return(
+                <>
+                <button onClick={reduceCount}> - </button>
+                <p> {count} </p>
+                <button onClick={addCount}> + </button>
+                <button onClick={resetCounter}>Reset</button>
+                </>
+            );
+        }
+
+        root.render(
+            <>
+            <h1>Welcome to React!</h1>
+            <p onClick={e => {alert('Clicked!')}}>Clck Here to Trigger the Alert</p>
+            <Book title="Sherlock Holmes: Case 1" year="2020"/>
+            <Book title="Sherlock Holmes: Case 2" />
+            <Stationery />
+            <CounterButton />
+            </>
+        );
+    </script>
+</body>
+</html>
